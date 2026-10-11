@@ -20,11 +20,13 @@ export default function SignUpForm() {
     const name = String(form.get("name") || "").trim();
     const email = String(form.get("email") || "").trim();
     const password = String(form.get("password") || "");
+    const confirm = String(form.get("confirm") || "");
 
     let msg = "";
     if (!name) msg = "আপনার নাম দিন";
     else if (!/^\S+@\S+\.\S+$/.test(email)) msg = "সঠিক ইমেইল দিন";
     else if (password.length < 6) msg = "পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে";
+    else if (password !== confirm) msg = "পাসওয়ার্ড দুটি মিলছে না";
 
     if (msg) {
       setFormError(msg);
@@ -47,67 +49,69 @@ export default function SignUpForm() {
     router.push("/signin");
   }
 
+  const input = "input input-bordered w-full bg-gray-50";
+  const label = "mb-1 text-sm font-medium text-gray-700";
+
   return (
-    <div className="mx-auto w-full max-w-md rounded-3xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8">
-      <h1 className="text-center text-2xl font-extrabold text-gray-900">অ্যাকাউন্ট খুলুন</h1>
-      <p className="mt-1 text-center text-sm text-gray-600">বিনামূল্যে রেজিস্ট্রেশন করুন</p>
+    <div className="mx-auto w-full max-w-md">
+      <div className="mb-5 text-center">
+        <h1 className="text-2xl font-extrabold text-gray-900">অ্যাকাউন্ট তৈরি করুন</h1>
+        <p className="mt-1 text-sm text-gray-500">
+          নতুন অ্যাকাউন্ট খুলে সব পণ্যের বিস্তারিত দাম দেখুন
+        </p>
+      </div>
 
-      <form onSubmit={onSubmit} className="mt-6 space-y-4" noValidate>
-        <label className="form-control w-full">
-          <span className="label-text mb-1 font-semibold">নাম</span>
-          <input
-            name="name"
-            type="text"
-            autoComplete="name"
-            placeholder="আপনার নাম"
-            className="input input-bordered w-full bg-white"
-          />
-        </label>
+      <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+        <form onSubmit={onSubmit} className="space-y-4" noValidate>
+          <label className="form-control w-full">
+            <span className={label}>নাম</span>
+            <input name="name" type="text" autoComplete="name" placeholder="আপনার নাম" className={input} />
+          </label>
 
-        <label className="form-control w-full">
-          <span className="label-text mb-1 font-semibold">ইমেইল</span>
-          <input
-            name="email"
-            type="email"
-            autoComplete="email"
-            placeholder="you@example.com"
-            className="input input-bordered w-full bg-white"
-          />
-        </label>
+          <label className="form-control w-full">
+            <span className={label}>ইমেইল</span>
+            <input name="email" type="email" autoComplete="email" placeholder="you@example.com" className={input} />
+          </label>
 
-        <label className="form-control w-full">
-          <span className="label-text mb-1 font-semibold">পাসওয়ার্ড</span>
-          <input
-            name="password"
-            type="password"
-            autoComplete="new-password"
-            placeholder="কমপক্ষে ৬ অক্ষর"
-            className="input input-bordered w-full bg-white"
-          />
-        </label>
+          <label className="form-control w-full">
+            <span className={label}>পাসওয়ার্ড</span>
+            <input name="password" type="password" autoComplete="new-password" placeholder="কমপক্ষে ৬ অক্ষর" className={input} />
+          </label>
 
-        {formError && (
-          <p role="alert" className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">
-            {formError}
-          </p>
-        )}
+          <label className="form-control w-full">
+            <span className={label}>পাসওয়ার্ড নিশ্চিত করুন</span>
+            <input name="confirm" type="password" autoComplete="new-password" placeholder="আবার পাসওয়ার্ড দিন" className={input} />
+          </label>
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="btn w-full border-emerald-600 bg-emerald-600 text-white hover:bg-emerald-700"
-        >
-          {loading ? <span className="loading loading-spinner loading-sm" /> : "রেজিস্টার করুন"}
-        </button>
-      </form>
+          {formError && (
+            <p role="alert" className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">
+              {formError}
+            </p>
+          )}
 
-      <div className="divider my-6 text-xs text-gray-500">অথবা</div>
-      <SocialButtons callbackURL="/" />
+          <button
+            type="submit"
+            disabled={loading}
+            className="btn w-full border-emerald-600 bg-emerald-600 text-white hover:bg-emerald-700"
+          >
+            {loading ? <span className="loading loading-spinner loading-sm" /> : "অ্যাকাউন্ট তৈরি করুন"}
+          </button>
+        </form>
 
-      <p className="mt-6 text-center text-sm text-gray-600">
-        আগে থেকেই অ্যাকাউন্ট আছে?{" "}
-        <Link href="/signin" className="font-bold text-emerald-700 hover:underline">
-          সাইন ইন করুন
+        <div className="divider my-4 text-xs text-gray-400">অথবা</div>
+        <SocialButtons callbackURL="/" verb="সাইন আপ" />
+
+        <p className="mt-5 text-center text-sm text-gray-600">
+          অ্যাকাউন্ট আছে?{" "}
+          <Link href="/signin" className="font-semibold text-emerald-700 hover:underline">
+            সাইন ইন করুন
+          </Link>
+        </p>
+      </div>
+
+      <p className="mt-5 text-center text-sm">
+        <Link href="/" className="text-gray-500 hover:text-emerald-700">
+          ← হোমে ফিরে যান
         </Link>
       </p>
     </div>
