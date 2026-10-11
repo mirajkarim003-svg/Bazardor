@@ -31,11 +31,6 @@ export function formatBnDecimal(n: number, digits = 1): string {
   return digitsToBn(n.toFixed(digits));
 }
 
-/** 148 -> "১৪৮ টাকা" */
-export function formatTaka(n: number): string {
-  return `${formatBnNumber(n)} টাকা`;
-}
-
 const UNIT_LABELS: Record<string, string> = {
   kg: "প্রতি কেজি",
   litre: "প্রতি লিটার",
