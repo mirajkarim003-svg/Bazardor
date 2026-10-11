@@ -10,16 +10,21 @@ body {
   font-family: var(--font-bangla), system-ui, sans-serif;
 }
 
-/* Pause the price ticker while the user hovers it */
-.ticker-track:hover {
-  animation-play-state: paused;
+/* Price ticker: the list is rendered twice, so moving -50% loops seamlessly */
+@keyframes ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .ticker-track {
-    animation: none;
-  }
-  html {
-    scroll-behavior: auto;
-  }
+.ticker-track {
+  animation: ticker 70s linear infinite;
+  will-change: transform;
+}
+
+.ticker-track:hover {
+  animation-play-state: paused;
 }

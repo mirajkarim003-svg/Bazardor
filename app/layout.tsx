@@ -28,7 +28,7 @@ export default async function RootLayout({
 
   return (
     <html lang="bn" data-theme="light" className={bangla.variable}>
-      <body className="flex min-h-screen flex-col bg-gray-50 text-gray-900 antialiased">
+      <body className="flex min-h-screen flex-col bg-[#eef3ed] text-gray-900 antialiased">
         <Navbar categories={categories} />
         <PriceTicker products={products} />
         <main className="flex-1">{children}</main>

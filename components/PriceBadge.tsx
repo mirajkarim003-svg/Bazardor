@@ -1,30 +1,22 @@
 import type { ChangeDir } from "@/lib/types";
 import { formatBnDecimal } from "@/lib/bn";
 
-export default function PriceBadge({
-  dir,
-  pct,
-  size = "md",
-}: {
-  dir: ChangeDir;
-  pct: number;
-  size?: "sm" | "md";
-}) {
-  const abs = Math.abs(pct);
+// Colours follow the Figma: price increase = red, decrease = green, flat = gray.
+export default function PriceBadge({ dir, pct }: { dir: ChangeDir; pct: number }) {
   const styles =
     dir === "up"
-      ? "bg-green-100 text-green-700"
+      ? "bg-red-50 text-red-600"
       : dir === "down"
-      ? "bg-red-100 text-red-700"
-      : "bg-gray-100 text-gray-600";
-  const symbol = dir === "up" ? "▲" : dir === "down" ? "▼" : "—";
-  const text = size === "sm" ? "text-xs px-1.5 py-0.5" : "text-sm px-2 py-1";
+      ? "bg-green-50 text-green-600"
+      : "bg-gray-100 text-gray-500";
+  const num = formatBnDecimal(Math.abs(pct));
+  const text = dir === "up" ? `▲ ${num}%` : dir === "down" ? `▼ ${num}%` : `—${num}%`;
 
   return (
     <span
-      className={`inline-flex items-center gap-1 rounded-full font-semibold whitespace-nowrap ${styles} ${text}`}
+      className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-semibold whitespace-nowrap ${styles}`}
     >
-      {symbol} {formatBnDecimal(abs)}%
+      {text}
     </span>
   );
 }
