@@ -32,7 +32,9 @@ export default function CategoryClient({ slug }: { slug: string }) {
         const category = categories.find((c) => c.slug === slug) ?? null;
 
         // Defensive: keep only items that really belong to this category.
-        const list = Array.isArray(products) ? products.filter((p) => p.category === slug) : [];
+        const list = Array.isArray(products)
+          ? products.filter((p) => p.category === slug)
+          : [];
 
         if (!cancelled) setState({ status: "ready", category, products: list });
       } catch {
@@ -48,7 +50,7 @@ export default function CategoryClient({ slug }: { slug: string }) {
 
   const sorted = useMemo(
     () => (state.status === "ready" ? sortProducts(state.products, sort) : []),
-    [state, sort]
+    [state, sort],
   );
 
   if (state.status === "loading") {
@@ -84,11 +86,16 @@ export default function CategoryClient({ slug }: { slug: string }) {
     <div className="mx-auto max-w-6xl space-y-4 px-4 py-6">
       {/* Title + icon */}
       <div className="flex items-center gap-3 rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
-        <span className="flex h-11 w-11 items-center justify-center rounded-full bg-rose-50 text-2xl" aria-hidden>
+        <span
+          className="flex h-11 w-11 items-center justify-center rounded-full bg-rose-50 text-2xl"
+          aria-hidden
+        >
           {state.category.icon}
         </span>
         <div>
-          <h1 className="text-xl font-extrabold text-gray-900">{state.category.nameBn}</h1>
+          <h1 className="text-xl font-extrabold text-gray-900">
+            {state.category.nameBn}
+          </h1>
           <p className="text-sm text-gray-500">
             {state.category.nameBn} ক্যাটাগরির সব পণ্যের আজকের দাম ও পরিবর্তন
           </p>
@@ -126,7 +133,9 @@ export default function CategoryClient({ slug }: { slug: string }) {
         </span>
       </div>
 
-      <p className="text-sm text-gray-500">মোট {digitsToBn(sorted.length)}টি পণ্য পাওয়া গেছে</p>
+      <p className="text-sm text-gray-500">
+        মোট {digitsToBn(sorted.length)}টি পণ্য পাওয়া গেছে
+      </p>
 
       <ProductGrid products={sorted} />
     </div>

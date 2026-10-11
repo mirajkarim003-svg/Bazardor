@@ -17,7 +17,9 @@ export default function SignInForm() {
   // Only allow same-site relative redirects.
   const rawCallback = params.get("callbackUrl");
   const callbackUrl =
-    rawCallback && rawCallback.startsWith("/") && !rawCallback.startsWith("//") ? rawCallback : "/";
+    rawCallback && rawCallback.startsWith("/") && !rawCallback.startsWith("//")
+      ? rawCallback
+      : "/";
 
   // Toast when middleware bounced the user from a protected route.
   useEffect(() => {
@@ -70,7 +72,9 @@ export default function SignInForm() {
       <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
         <form onSubmit={onSubmit} className="space-y-4" noValidate>
           <label className="form-control w-full">
-            <span className="mb-1 text-sm font-medium text-gray-700">ইমেইল</span>
+            <span className="mb-1 text-sm font-medium text-gray-700">
+              ইমেইল
+            </span>
             <input
               name="email"
               type="email"
@@ -81,7 +85,9 @@ export default function SignInForm() {
           </label>
 
           <label className="form-control w-full">
-            <span className="mb-1 text-sm font-medium text-gray-700">পাসওয়ার্ড</span>
+            <span className="mb-1 text-sm font-medium text-gray-700">
+              পাসওয়ার্ড
+            </span>
             <input
               name="password"
               type="password"
@@ -92,7 +98,10 @@ export default function SignInForm() {
           </label>
 
           {formError && (
-            <p role="alert" className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">
+            <p
+              role="alert"
+              className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700"
+            >
               {formError}
             </p>
           )}
@@ -102,7 +111,11 @@ export default function SignInForm() {
             disabled={loading}
             className="btn w-full border-emerald-600 bg-emerald-600 text-white hover:bg-emerald-700"
           >
-            {loading ? <span className="loading loading-spinner loading-sm" /> : "সাইন ইন"}
+            {loading ? (
+              <span className="loading loading-spinner loading-sm" />
+            ) : (
+              "সাইন ইন"
+            )}
           </button>
         </form>
 
@@ -111,7 +124,10 @@ export default function SignInForm() {
 
         <p className="mt-5 text-center text-sm text-gray-600">
           অ্যাকাউন্ট নেই?{" "}
-          <Link href="/signup" className="font-semibold text-emerald-700 hover:underline">
+          <Link
+            href="/signup"
+            className="font-semibold text-emerald-700 hover:underline"
+          >
             সাইন আপ করুন
           </Link>
         </p>

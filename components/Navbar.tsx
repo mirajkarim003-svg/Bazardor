@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -38,7 +39,10 @@ export default function Navbar({ categories }: { categories: Category[] }) {
   };
 
   const user = session?.user;
-  const initial = (user?.name || user?.email || "?").trim().charAt(0).toUpperCase();
+  const initial = (user?.name || user?.email || "?")
+    .trim()
+    .charAt(0)
+    .toUpperCase();
 
   return (
     <header className="border-b border-gray-200 bg-white">
@@ -46,23 +50,20 @@ export default function Navbar({ categories }: { categories: Category[] }) {
         {/* Row 1: logo + date | auth */}
         <div className="flex items-center justify-between gap-3 py-3">
           <Link href="/" className="flex items-center gap-2.5">
-            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-600 text-white">
-              <svg
-                className="h-5 w-5"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden
-              >
-                <path d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
-              </svg>
-            </span>
+            <Image
+              src="/logo-icon.png"
+              alt="বাজার দর"
+              width={40}
+              height={40}
+              className="h-10 w-10 object-contain"
+            />
             <span className="leading-tight">
-              <span className="block text-base font-extrabold text-gray-900">বাজার দর</span>
-              <span className="block min-h-4 text-xs text-gray-500">{date}</span>
+              <span className="block text-base font-extrabold text-gray-900">
+                বাজার দর
+              </span>
+              <span className="block min-h-4 text-xs text-gray-500">
+                {date}
+              </span>
             </span>
           </Link>
 
@@ -93,7 +94,12 @@ export default function Navbar({ categories }: { categories: Category[] }) {
                   <span className="hidden max-w-28 truncate text-sm font-medium text-gray-800 sm:block">
                     {user.name}
                   </span>
-                  <svg className="h-4 w-4 text-gray-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
+                  <svg
+                    className="h-4 w-4 text-gray-500"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden
+                  >
                     <path
                       fillRule="evenodd"
                       d="M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
@@ -106,8 +112,12 @@ export default function Navbar({ categories }: { categories: Category[] }) {
                   className="dropdown-content z-50 mt-2 w-60 rounded-xl border border-gray-200 bg-white p-2 shadow-lg"
                 >
                   <div className="px-3 py-2">
-                    <p className="truncate text-sm font-bold text-gray-900">{user.name}</p>
-                    <p className="truncate text-xs text-gray-500">{user.email}</p>
+                    <p className="truncate text-sm font-bold text-gray-900">
+                      {user.name}
+                    </p>
+                    <p className="truncate text-xs text-gray-500">
+                      {user.email}
+                    </p>
                   </div>
                   <div className="my-1 border-t border-gray-100" />
                   <Link
@@ -145,7 +155,10 @@ export default function Navbar({ categories }: { categories: Category[] }) {
         </div>
 
         {/* Row 2: category links */}
-        <nav className="-mx-4 flex gap-1 overflow-x-auto px-4 pb-2.5" aria-label="পণ্যের ধরন">
+        <nav
+          className="-mx-4 flex gap-1 overflow-x-auto px-4 pb-2.5"
+          aria-label="পণ্যের ধরন"
+        >
           {categories.map((c) => {
             const href = `/category/${c.slug}`;
             const active = pathname === href;
